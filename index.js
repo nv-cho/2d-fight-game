@@ -24,6 +24,10 @@ const player = new Fighter({
     x: 0,
     y: 0,
   },
+  offset: {
+    x: 0,
+    y: 0,
+  },
   imageSrc: "./img/samuraiMack/Idle.png",
   framesMax: 8,
   scale: 2.5,
@@ -48,6 +52,10 @@ const player = new Fighter({
       imageSrc: "./img/samuraiMack/Fall.png",
       framesMax: 2,
     },
+    attack1: {
+      imageSrc: "./img/samuraiMack/Attack1.png",
+      framesMax: 6,
+    },
   },
 });
 
@@ -60,6 +68,35 @@ const enemy = new Fighter({
   offset: {
     x: -50,
     y: 0,
+  },
+  imageSrc: "./img/kenji/Idle.png",
+  framesMax: 4,
+  scale: 2.5,
+  offset: {
+    x: 215,
+    y: 170,
+  },
+  sprites: {
+    idle: {
+      imageSrc: "./img/kenji/Idle.png",
+      framesMax: 4,
+    },
+    run: {
+      imageSrc: "./img/kenji/Run.png",
+      framesMax: 8,
+    },
+    jump: {
+      imageSrc: "./img/kenji/Jump.png",
+      framesMax: 2,
+    },
+    fall: {
+      imageSrc: "./img/kenji/Fall.png",
+      framesMax: 2,
+    },
+    attack1: {
+      imageSrc: "./img/kenji/Attack1.png",
+      framesMax: 4,
+    },
   },
 });
 
@@ -89,7 +126,7 @@ function animate() {
   background.update();
   shop.update();
   player.update();
-  //   enemy.update();
+  enemy.update();
 
   player.velocity.x = 0;
   enemy.velocity.x = 0;
@@ -114,8 +151,18 @@ function animate() {
   /** @dev - enemy movement */
   if (keys.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
     enemy.velocity.x = -5;
+    enemy.switchSprite("run");
   } else if (keys.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
     enemy.velocity.x = 5;
+    enemy.switchSprite("run");
+  } else {
+    enemy.switchSprite("idle");
+  }
+
+  if (enemy.velocity.y < 0) {
+    enemy.switchSprite("jump");
+  } else if (enemy.velocity.y > 0) {
+    enemy.switchSprite("fall");
   }
 
   /** @dev - detect player collision */
@@ -177,7 +224,12 @@ window.addEventListener("keydown", (e) => {
       enemy.lastKey = "ArrowLeft";
       break;
     case "ArrowUp":
-      enemy.velocity.y = -15;
+      if (
+        enemy.position.y + enemy.height + enemy.velocity.y >=
+        canvas.height - 105
+      ) {
+        enemy.velocity.y = -15;
+      }
       break;
     case "ArrowDown":
       enemy.attack();
