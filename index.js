@@ -1,6 +1,9 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
+const music = document.querySelector("#music");
+music.volume = 0.1;
+
 canvas.width = 1024;
 canvas.height = 576;
 
