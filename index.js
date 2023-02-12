@@ -56,7 +56,7 @@ const player = new Fighter({
       framesMax: 6,
     },
     takeHit: {
-      imageSrc: "./img/samuraiMack/Take hit - white silhouette.png",
+      imageSrc: "./img/samuraiMack/take-hit-white.png",
       framesMax: 4,
     },
     death: {
@@ -109,7 +109,7 @@ const enemy = new Fighter({
       framesMax: 4,
     },
     takeHit: {
-      imageSrc: "./img/kenji/Take hit.png",
+      imageSrc: "./img/kenji/take-hit.png",
       framesMax: 3,
     },
     death: {
