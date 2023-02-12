@@ -26,6 +26,7 @@ class Sprite {
       height: 50,
     };
     this.isAttacking;
+    this.health = 100;
   }
 
   draw() {
@@ -48,7 +49,7 @@ class Sprite {
   update() {
     this.draw();
 
-    this.attackBox.position.x = this.position.x - this.attackBox.offset.x;
+    this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     this.attackBox.position.y = this.position.y;
 
     this.position.y += this.velocity.y;
@@ -154,7 +155,8 @@ function animate() {
     player.isAttacking
   ) {
     player.isAttacking = false;
-    console.log("hit");
+    enemy.health -= 20;
+    document.querySelector("#enemyHealth").style.width = enemy.health + "%";
   }
 
   /** @dev - detect enemy collision */
@@ -163,7 +165,8 @@ function animate() {
     enemy.isAttacking
   ) {
     enemy.isAttacking = false;
-    console.log("hit");
+    player.health -= 20;
+    document.querySelector("#playerHealth").style.width = player.health + "%";
   }
 }
 
